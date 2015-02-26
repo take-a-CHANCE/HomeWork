@@ -59,7 +59,8 @@ public abstract class Stack2<T> extends StackSecondary<T> {
      */
     private void createNewRep() {
 
-        // TODO - fill in body
+        this.top = new Node();
+        this.length = 0;
 
     }
 
@@ -86,7 +87,12 @@ public abstract class Stack2<T> extends StackSecondary<T> {
     public final void push(T x) {
         assert x != null : "Violation of: x is not null";
 
-        // TODO - fill in body
+        this.length++;
+        Node p = this.top;
+        Node q = new Node();
+        q.data = x;
+        q.next = p;
+        this.top = q;
 
     }
 
@@ -94,14 +100,19 @@ public abstract class Stack2<T> extends StackSecondary<T> {
     public final T pop() {
         assert this.length() > 0 : "Violation of: this /= <>";
 
-        // TODO - fill in body
+        this.length--;
+        Node p = this.top;
+        Node q = this.top.next;
+        T data = p.data;
+        this.top = q;
+        return data;
 
     }
 
     @Override
     public final int length() {
 
-        // TODO - fill in body
+        return this.length;
 
     }
 
