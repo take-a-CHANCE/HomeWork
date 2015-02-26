@@ -60,6 +60,7 @@ public abstract class Stack2<T> extends StackSecondary<T> {
     private void createNewRep() {
 
         this.top = new Node();
+        this.top.next = null;
         this.length = 0;
 
     }
