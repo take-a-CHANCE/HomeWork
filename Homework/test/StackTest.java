@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import components.stack.Stack;
 
 /**
@@ -67,4 +71,77 @@ public abstract class StackTest {
 
     // TODO - add test cases for constructor, push, pop, and length
 
+    @Test
+    public final void testDefaultConstructor() {
+        Stack<String> s = this.constructorTest();
+        Stack<String> sExpected = this.constructorRef();
+
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testNonEmptyConstructor() {
+        Stack<String> s = this.createFromArgsTest("a", "b", "c");
+        Stack<String> sExpected = this.createFromArgsRef("a", "b", "c");
+
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testNonEmptyLength() {
+        Stack<String> s = this.createFromArgsTest("a", "b", "c");
+        Stack<String> sExpected = this.createFromArgsRef("a", "b", "c");
+
+        assertEquals(3, s.length());
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testEmptyLength() {
+        Stack<String> s = this.createFromArgsTest();
+        Stack<String> sExpected = this.createFromArgsRef();
+
+        assertEquals(0, s.length());
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testNonEmptyPush() {
+        Stack<String> s = this.createFromArgsTest("b", "c");
+        Stack<String> sExpected = this.createFromArgsRef("a", "b", "c");
+
+        s.push("a");
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testEmptyPush() {
+        Stack<String> s = this.createFromArgsTest();
+        Stack<String> sExpected = this.createFromArgsRef("a");
+
+        s.push("a");
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testNonEmptyPop() {
+        Stack<String> s = this.createFromArgsTest("a", "b", "c");
+        Stack<String> sExpected = this.createFromArgsRef("b", "c");
+
+        String x = s.pop();
+
+        assertEquals("a", x);
+        assertEquals(s, sExpected);
+    }
+
+    @Test
+    public final void testEmptyPop() {
+        Stack<String> s = this.createFromArgsTest("a");
+        Stack<String> sExpected = this.createFromArgsRef();
+
+        String x = s.pop();
+
+        assertEquals("a", x);
+        assertEquals(s, sExpected);
+    }
 }
