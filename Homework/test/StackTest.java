@@ -8,7 +8,7 @@ import components.stack.Stack;
  * JUnit test fixture for {@code Stack<String>}'s constructor and kernel
  * methods.
  *
- * @author Put your name here
+ * @author Chance Davis
  *
  */
 public abstract class StackTest {
