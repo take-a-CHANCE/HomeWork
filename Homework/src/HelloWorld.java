@@ -58,8 +58,8 @@ public final class HelloWorld {
         Queue<T> holder = q.newInstance();
         while (!sorted) {
             T deq = q.dequeue();
-            int z = compare(deq, x);
-            if (z > 0) {
+            //int z = compare(deq, x);
+            if (0 > 0) {
                 q.replaceFront(deq);
                 q.replaceFront(x);
                 sorted = true;
@@ -71,24 +71,61 @@ public final class HelloWorld {
         q.transferFrom(holder);
     }
 
+//    /**
+//     * Sorts {@code this} according to the ordering provided by the
+//     * {@code compare} method from {@code order}.
+//     *
+//     * @param order
+//     *            ordering by which to sort
+//     * @updates this
+//     * @requires IS_TOTAL_PREORDER([relation computed by order.compare method])
+//     * @ensures <pre>
+//     * perms(this, #this)  and
+//     * IS_SORTED(this, [relation computed by order.compare method])
+//     * </pre>
+//     */
+//    public void sort(Comparator<T> order) {
+//        Queue<T> sorted = this.newInstance();
+//        while (this.size() > 0) {
+//            insertInOrder(sorted, this.dequeue(), order);
+//        }
+//        this.transferFrom(sorted);
+//    }
+
     /**
-     * Sorts {@code this} according to the ordering provided by the
-     * {@code compare} method from {@code order}.
+     * Evaluates a Boolean expression and returns its value.
      *
-     * @param order
-     *            ordering by which to sort
-     * @updates this
-     * @requires IS_TOTAL_PREORDER([relation computed by order.compare method])
+     * @param tokens
+     *            the {@code Queue<String>} that starts with a bool-expr string
+     * @return value of the expression
+     * @updates tokens
+     * @requires [a bool-expr string is a prefix of tokens]
      * @ensures <pre>
-     * perms(this, #this)  and
-     * IS_SORTED(this, [relation computed by order.compare method])
+     * valueOfBoolExpr =
+     *   [value of longest bool-expr string at start of #tokens]  and
+     * #tokens = [longest bool-expr string at start of #tokens] * tokens
      * </pre>
      */
-    public void sort(Comparator<T> order) {
-        Queue<T> sorted = this.newInstance();
-        while (this.size() > 0) {
-            insertInOrder(sorted, this.dequeue(), order);
+    public static boolean valueOfBoolExpr(Queue<String> tokens) {
+        boolean result = false;
+
+        String token = tokens.dequeue();
+        if (token.charAt(0) == '(') {
+            result = valueOfBoolExpr(tokens);
+            String operator = tokens.dequeue();
+            if (operator.equals("AND")) {
+                result &= valueOfBoolExpr(tokens);
+            } else if (operator.equals("OR")) {
+                result |= valueOfBoolExpr(tokens);
+            }
+        } else if (token.equals("NOT")) {
+            result = !valueOfBoolExpr(tokens);
+        } else if (token.equals("T")) {
+            result = true;
+        } else if (token.equals("F")) {
+            result = false;
         }
-        this.transferFrom(sorted);
+
+        return result;
     }
 }
